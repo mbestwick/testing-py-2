@@ -41,6 +41,7 @@ class PartyTestsDatabase(unittest.TestCase):
 
         self.client = app.test_client()
         app.config['TESTING'] = True
+        app.config['SECRET_KEY'] = "key"
 
         # Connect to test database (uncomment when testing database)
         connect_to_db(app, "postgresql:///testdb")
@@ -48,6 +49,10 @@ class PartyTestsDatabase(unittest.TestCase):
         # Create tables and add sample data (uncomment when testing database)
         db.create_all()
         example_data()
+
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess['RSVP'] = True
 
     def tearDown(self):
         """Do at end of every test."""

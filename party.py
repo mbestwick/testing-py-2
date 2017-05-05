@@ -30,8 +30,13 @@ def rsvp():
 
 @app.route("/games")
 def games():
-    games = Game.query.all()
-    return render_template("games.html", games=games)
+
+    if 'RSVP' in session:
+        games = Game.query.all()
+        return render_template("games.html", games=games)
+    else:
+        flash("YOU MUST LOGIN TO SEE THE GAMES!!!!")
+        return redirect("/")
 
 
 if __name__ == "__main__":

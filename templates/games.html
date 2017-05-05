@@ -5,6 +5,13 @@
 {% block content %}
 
   <h2>Games</h2>
+  <p>Add your own game here!</p>
+  <form action="/games" method="POST">
+    <input type="text" name="game_name" placeholder="Name">
+    <input type="text" name="game_description" placeholder="Description">
+    <input type="submit" value="Submit">
+  </form>
+
   <table class="table">
     <thead>
     <th>Name</th>
@@ -15,6 +22,10 @@
       <tr>
         <td>{{ game.name }}</td>
         <td>{{ game.description }}</td>
+        <form action="/game-delete" method="POST">
+          <td><input type="submit" value="Delete Game">
+              <input type="hidden" name="game_name", value="{{ game.name }}"></td>
+        </form>
       </tr>
     {% endfor %}
     </tbody>
